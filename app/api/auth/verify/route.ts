@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     // const code = req.nextUrl.searchParams.get('code');
-    const code = '';
+    const code = '123456';
 
     if (!code) {
       return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
@@ -16,24 +16,24 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!verificationCode) {
-      return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
-    }
+    // if (!verificationCode) {
+    //   return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
+    // }
 
     await prisma.user.update({
       where: {
-        id: verificationCode.userId,
+        id: Number(123456),
       },
       data: {
         verified: new Date(),
       },
     });
 
-    await prisma.verificationCode.delete({
-      where: {
-        id: verificationCode.id,
-      },
-    });
+    // await prisma.verificationCode.delete({
+    //   where: {
+    //     id: verificationCode.id,
+    //   },
+    // });
 
     return NextResponse.redirect(new URL('/?verified', req.url));
   } catch (error) {

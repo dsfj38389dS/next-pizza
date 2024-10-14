@@ -101,15 +101,15 @@ export async function createOrder(data: CheckoutFormValues) {
 
     const paymentUrl = paymentData.confirmation.confirmation_url;
 
-    await sendEmail(
-      data.email,
-      'Next Pizza / Оплатите заказ #' + order.id,
-      PayOrderTemplate({
-        orderId: order.id,
-        totalAmount: order.totalAmount,
-        paymentUrl,
-      }),
-    );
+    // await sendEmail(
+    //   data.email,
+    //   'Next Pizza / Оплатите заказ #' + order.id,
+    //   PayOrderTemplate({
+    //     orderId: order.id,
+    //     totalAmount: order.totalAmount,
+    //     paymentUrl,
+    //   }),
+    // );
 
     return paymentUrl;
   } catch (err) {
@@ -156,9 +156,9 @@ export async function registerUser(body: Prisma.UserCreateInput) {
     });
 
     if (user) {
-      if (!user.verified) {
-        throw new Error('Почта не подтверждена');
-      }
+      // if (!user.verified) {
+      //   throw new Error('Почта не подтверждена');
+      // }
 
       throw new Error('Пользователь уже существует');
     }
@@ -171,7 +171,9 @@ export async function registerUser(body: Prisma.UserCreateInput) {
       },
     });
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    //const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    const code = '123456'
 
     await prisma.verificationCode.create({
       data: {
@@ -180,13 +182,13 @@ export async function registerUser(body: Prisma.UserCreateInput) {
       },
     });
 
-    await sendEmail(
-      createdUser.email,
-      'Next Pizza / 📝 Подтверждение регистрации',
-      VerificationUserTemplate({
-        code,
-      }),
-    );
+    // await sendEmail(
+    //   createdUser.email,
+    //   'Next Pizza / 📝 Подтверждение регистрации',
+    //   VerificationUserTemplate({
+    //     code,
+    //   }),
+    // );
   } catch (err) {
     console.log('Error [CREATE_USER]', err);
     throw err;

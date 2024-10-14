@@ -5,6 +5,7 @@ import React from 'react';
 export const useIngredients = () => {
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
   const [loading, setLoading] = React.useState(true);
+  console.log(ingredients)
 
   React.useEffect(() => {
     async function fetchIngredients() {
